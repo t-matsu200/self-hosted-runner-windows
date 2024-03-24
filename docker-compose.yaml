@@ -1,0 +1,15 @@
+version: '3.9'
+
+networks:
+  default:
+    name: "Default Switch"
+    external: true
+
+services:
+  win-action:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # entrypoint: ["pwsh", "-Command", "Start-Sleep", "-Seconds", "2147483"]
+    env_file:
+      - .env
