@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: test-windows
-        shell: powershell
+        shell: pwsh
         run: |
           New-Item -ItemType Directory -Path "C:\actions-runner"
           New-Item -ItemType File -Path "C:\actions-runner\myfile.txt"
