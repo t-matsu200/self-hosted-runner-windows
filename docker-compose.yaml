@@ -6,7 +6,7 @@ networks:
     external: true
 
 services:
-  win-action:
+  win-action1:
     build:
       context: .
       dockerfile: Dockerfile

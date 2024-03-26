@@ -23,9 +23,8 @@ ENV ACTIONS_RUNNER_HOOK_JOB_COMPLETED C:\\actions-runner-hook\\Job-Completed.ps1
 ENV PROGRAM_FILES "C:\Program Files"
 
 USER ContainerAdministrator
-# USER ContainerUser
 COPY --from=installer-env ["/PowerShell", "C:/Program Files/PowerShell"]
-COPY --from=servercore /Windows/System32/NetApi32.dll /Windows/System32/NetApi32.dll
+COPY --from=servercore ["/Windows/System32/NetApi32.dll", "C:/Windows/System32/NetApi32.dll"]
 COPY --from=servercore ["/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "C:/Program Files/PowerShell/powershell.exe"]
 
 # Setup
@@ -68,6 +67,8 @@ ADD https://nodejs.org/dist/v20.11.1/node-v20.11.1-win-x64.zip nodejs.zip
 RUN Expand-Archive -Path nodejs.zip -DestinationPath C:\nodejs\ ; \
   Remove-Item -Path nodejs.zip ; \
   Rename-Item C:\nodejs\node-v20.11.1-win-x64 C:\nodejs\bin
+
+USER ContainerUser
 
 WORKDIR C:\\actions-runner
 

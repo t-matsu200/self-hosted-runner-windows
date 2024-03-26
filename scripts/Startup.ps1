@@ -1,11 +1,15 @@
-$config_args = @()
+$config_args = ""
 
 if ($env:RUNNER_EPHEMERAL -eq "true") {
-    $config_args += "--ephemeral"
+  $config_args = "$config_args --ephemeral"
 }
 
 if ($env:DISABLE_RUNNER_UPDATE -eq "true") {
-    $config_args += "--disableupdate"
+  $config_args = "$config_args --disableupdate"
+}
+
+if ($env:RUNNER_LABEL -ne "") {
+  $config_args = "$config_args --labels $env:RUNNER_LABEL"
 }
 
 if ($env:RUNNER_ORG -ne "" -and $env:RUNNER_REPO -ne "" -and $env:RUNNER_ENTERPRISE -ne "") {
@@ -25,7 +29,11 @@ else {
   exit 1
 }
 
-$runner_name = "$env:RUNNER_NAME_PREFIX-$env:COMPUTERNAME"
+if (-not $env:RUNNER_NAME_PREFIX) {
+  $runner_name = "win-action-$env:COMPUTERNAME"
+} else {
+  $runner_name = "$env:RUNNER_NAME_PREFIX-$env:COMPUTERNAME"
+}
 
 .\config.cmd `
   --unattended --replace `
