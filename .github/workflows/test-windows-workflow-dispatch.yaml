@@ -33,10 +33,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: test-windows
+      - name: Test commands
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Path "C:\actions-runner"
-          New-Item -ItemType File -Path "C:\actions-runner\myfile.txt"
-          Get-Content -Path "C:\actions-runner\myfile.txt"
+          New-Item -ItemType Directory -Path "C:\actions-runner\runner-temp"
+          New-Item -ItemType File -Path "C:\actions-runner\runner-temp\myfile.txt"
+          Get-Content -Path "C:\actions-runner\runner-temp\myfile.txt"
           Get-Location
