@@ -1,0 +1,42 @@
+name: test-windows-workflow-dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true
+        type: boolean
+      tags:
+        description: 'Test scenario tags'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+jobs:
+  build:
+    name: test-windows
+    runs-on: ['Windows', 'self-hosted', 'X64']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: test-windows
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path "C:\actions-runner"
+          New-Item -ItemType File -Path "C:\actions-runner\myfile.txt"
+          Get-Content -Path "C:\actions-runner\myfile.txt"
+          Get-Location
