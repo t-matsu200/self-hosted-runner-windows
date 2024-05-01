@@ -7,6 +7,13 @@ try {
     Write-Host "WORKFLOW: $env:GITHUB_WORKFLOW"
     Write-Host "RUNNER_NAME: $env:RUNNER_NAME"
     Write-Host "RUN_ID: $env:GITHUB_RUN_ID"
+
+    $tmpDirectory = "C:\actions-runner\runner-temp"
+    if (Test-Path $tmpDirectory -PathType Container) {
+        Remove-Item -Path $tmpDirectory -Recurse -Force
+    } else {
+        Write-Host "Directory does not exist."
+    }
 }
 catch {
     Write-Host "An error occurred: $_"

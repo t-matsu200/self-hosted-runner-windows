@@ -1,19 +1,18 @@
 $config_args = ""
 
 if ($env:RUNNER_EPHEMERAL -eq "true") {
-  Write-Host "Add option: --ephemeral"
   $config_args = "$config_args --ephemeral"
 }
 
 if ($env:DISABLE_RUNNER_UPDATE -eq "true") {
-  Write-Host "Add option: --disableupdate"
   $config_args = "$config_args --disableupdate"
 }
 
 if ($env:RUNNER_LABEL -ne "") {
-  Write-Host "Add option: --labels $env:RUNNER_LABEL"
   $config_args = "$config_args --labels $env:RUNNER_LABEL"
 }
+
+Write-Host "Add option: $config_args"
 
 if ($env:RUNNER_ORG -ne "" -and $env:RUNNER_REPO -ne "" -and $env:RUNNER_ENTERPRISE -ne "") {
   $ATTACH = "$env:RUNNER_ORG/$env:RUNNER_REPO"
@@ -46,7 +45,6 @@ if (-not $env:RUNNER_NAME_PREFIX) {
   --url "$env:GITHUB_URL/$ATTACH" `
   --pat "$env:GITHUB_ACCESS_TOKEN" `
   --runnergroup "$env:RUNNER_GROUPS" `
-  --work "_work" `
-  $config_args
+  --work "_work" $config_args
 
 .\run.cmd
