@@ -13,3 +13,8 @@ services:
     # entrypoint: ["pwsh", "-Command", "Start-Sleep", "-Seconds", "2147483"]
     env_file:
       - .env
+
+  # win-test:
+  #   image: mcr.microsoft.com/windows/servercore:1809
+  #   entrypoint: ["powershell", "-Command", "Start-Sleep", "-Seconds", "2147483"]
+

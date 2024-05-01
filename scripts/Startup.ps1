@@ -1,14 +1,17 @@
 $config_args = ""
 
 if ($env:RUNNER_EPHEMERAL -eq "true") {
+  Write-Host "Add option: --ephemeral"
   $config_args = "$config_args --ephemeral"
 }
 
 if ($env:DISABLE_RUNNER_UPDATE -eq "true") {
+  Write-Host "Add option: --disableupdate"
   $config_args = "$config_args --disableupdate"
 }
 
 if ($env:RUNNER_LABEL -ne "") {
+  Write-Host "Add option: --labels $env:RUNNER_LABEL"
   $config_args = "$config_args --labels $env:RUNNER_LABEL"
 }
 
@@ -29,6 +32,8 @@ else {
   exit 1
 }
 
+Write-Host "URL: $env:GITHUB_URL/$ATTACH"
+
 if (-not $env:RUNNER_NAME_PREFIX) {
   $runner_name = "win-action-$env:COMPUTERNAME"
 } else {
@@ -45,9 +50,3 @@ if (-not $env:RUNNER_NAME_PREFIX) {
   $config_args
 
 .\run.cmd
-
-# Write-Host $PID
-
-# Start-Sleep -Seconds 2147483
-
-# Wait-Process -Id $PID
